@@ -1,0 +1,889 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Programa de curso B2.2 — Año académico 2026-27 (ESPAÑOL) · EOI Barcelona Drassanes</title>
+  <!-- Carga de Tailwind CSS para estructura fluida y diseño responsive -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Tipografía Inter desde Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
+          },
+          colors: {
+            eoi: {
+              burgundy: '#7F1D1D',
+              crimson: '#B91C1C',
+              bright: '#DC2626',
+              rose: '#FFF5F5',
+              blush: '#FEE2E2',
+              border: '#FECACA',
+            },
+          },
+        },
+      },
+    };
+  </script>
+  <style>
+    /* Transiciones suaves para los paneles desplegables del acordeón */
+    .accordion-content {
+      display: grid;
+      grid-template-rows: 0fr;
+      transition: grid-template-rows 0.26s cubic-bezier(0.25, 0.8, 0.25, 1);
+    }
+
+    .accordion-item.is-open > .accordion-content {
+      grid-template-rows: 1fr;
+    }
+
+    .accordion-inner {
+      overflow: hidden;
+    }
+
+    .accordion-chevron {
+      transition: transform 0.24s ease;
+    }
+
+    .accordion-item.is-open > .accordion-trigger .accordion-chevron {
+      transform: rotate(180deg);
+    }
+
+    /* Estilos de impresión limpios para exportar o imprimir desde el navegador */
+    @media print {
+      body {
+        background: #ffffff !important;
+        color: #111827 !important;
+      }
+      .no-print {
+        display: none !important;
+      }
+      .accordion-content {
+        grid-template-rows: 1fr !important;
+      }
+      .accordion-item {
+        break-inside: avoid;
+        page-break-inside: avoid;
+        box-shadow: none !important;
+      }
+    }
+  </style>
+</head>
+<body class="min-h-screen bg-gradient-to-b from-red-50/60 via-white to-red-50/40 text-slate-800 antialiased selection:bg-red-100 selection:text-red-900">
+
+  <!-- Contenedor principal centrado y fluido -->
+  <div class="mx-auto max-w-5xl px-4 py-6 sm:px-6 lg:px-8">
+
+    <!-- Cabecera institucional limpia en rojo y blanco con espacio reservado para logotipo -->
+    <header class="rounded-2xl border border-red-200 bg-white p-5 shadow-sm sm:p-7">
+      <div class="flex flex-col gap-5 sm:flex-row sm:items-start sm:justify-between">
+        <!-- Espacio reservado claramente marcado para insertar el logotipo posteriormente -->
+        <div
+          id="logo-placeholder"
+          aria-label="Espacio reservado para el logotipo del centro"
+          class="flex min-h-[76px] w-full shrink-0 flex-col items-center justify-center rounded-xl border-2 border-dashed border-red-300 bg-red-50/60 px-4 py-3 text-center sm:w-56"
+        >
+          <span class="text-[11px] font-bold uppercase tracking-wider text-red-700">
+            Espacio para logotipo
+          </span>
+          <span class="mt-0.5 text-xs text-red-600/90">
+            Insertar logo aquí posteriormente
+          </span>
+        </div>
+
+        <!-- Título del programa y subtítulo oficial -->
+        <div class="flex-1 sm:pl-2">
+          <p class="text-xs font-bold uppercase tracking-widest text-red-700">
+            Escola Oficial d'Idiomes · EOI Barcelona Drassanes
+          </p>
+          <h1 class="mt-1.5 text-2xl font-extrabold tracking-tight text-red-950 sm:text-3xl">
+            Programa de curso B2.2 — Año académico 2026-27 (ESPAÑOL)
+          </h1>
+          <p class="mt-2 text-sm leading-relaxed text-slate-600">
+            Guía de referencia del nivel con estructura desplegable por apartados para consultar los objetivos, contenidos lingüísticos, socioculturales y criterios de evaluación de forma ágil y ordenada.
+          </p>
+        </div>
+      </div>
+
+      <!-- Barra de control rápido: Expandir todo / Contraer todo y estado -->
+      <div class="no-print mt-5 flex flex-wrap items-center justify-between gap-3 border-t border-red-100 pt-4">
+        <div class="flex flex-wrap items-center gap-2">
+          <button
+            type="button"
+            id="expand-all-btn"
+            class="inline-flex items-center gap-2 rounded-xl bg-red-800 px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 active:scale-[0.99]"
+          >
+            <!-- Icono expandir -->
+            <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="m7 15 5 5 5-5" />
+              <path d="m7 9 5-5 5 5" />
+            </svg>
+            Expandir todo
+          </button>
+
+          <button
+            type="button"
+            id="collapse-all-btn"
+            class="inline-flex items-center gap-2 rounded-xl border border-red-200 bg-white px-4 py-2.5 text-sm font-semibold text-red-900 shadow-sm transition hover:bg-red-50 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 active:scale-[0.99]"
+          >
+            <!-- Icono contraer -->
+            <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="m17 14-5-5-5 5" />
+              <path d="M7 20h10" />
+              <path d="M7 4h10" />
+            </svg>
+            Contraer todo
+          </button>
+        </div>
+
+        <p id="accordion-status" class="text-xs font-medium text-red-800/80" aria-live="polite">
+          Haz clic en cualquier pestaña para desplegar su contenido
+        </p>
+      </div>
+    </header>
+
+    <!-- Acordeón principal con todas las secciones obligatorias del programa B2.2 Español -->
+    <main id="program-accordion" class="mt-6 space-y-4">
+
+      <!-- 1. OBJETIVOS GENERALES -->
+      <section class="accordion-item rounded-2xl border border-red-200/90 bg-white shadow-sm" data-section="objetivos-generales">
+        <button
+          type="button"
+          class="accordion-trigger flex w-full items-center justify-between gap-4 rounded-2xl px-5 py-4 text-left transition hover:bg-red-50/50 focus:outline-none focus-visible:ring-2 focus-visible:ring-red-600 sm:px-6"
+          aria-expanded="false"
+        >
+          <span class="flex items-center gap-3">
+            <span class="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-red-800 text-sm font-bold text-white">
+              1
+            </span>
+            <span class="text-base font-bold text-red-950 sm:text-lg">
+              Objetivos generales
+            </span>
+          </span>
+          <svg class="accordion-chevron h-5 w-5 shrink-0 text-red-800" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="m6 9 6 6 6-6" />
+          </svg>
+        </button>
+
+        <div class="accordion-content">
+          <div class="accordion-inner">
+            <div class="border-t border-red-100 px-5 py-5 sm:px-6">
+              <ul class="space-y-3 text-sm leading-relaxed text-slate-700 sm:text-[15px]">
+                <li class="flex items-start gap-3">
+                  <span class="mt-2 h-2 w-2 shrink-0 rounded-full bg-red-600"></span>
+                  <span>Utilizar el idioma eficazmente, de forma fluida y precisa, en un amplio abanico de situaciones de la vida cotidiana, con un cierto dominio de los aspectos formales y discursivos.</span>
+                </li>
+                <li class="flex items-start gap-3">
+                  <span class="mt-2 h-2 w-2 shrink-0 rounded-full bg-red-600"></span>
+                  <span>Utilizar estrategias para reflexionar y corregir los propios errores y las limitaciones en la expresión y en la comprensión.</span>
+                </li>
+                <li class="flex items-start gap-3">
+                  <span class="mt-2 h-2 w-2 shrink-0 rounded-full bg-red-600"></span>
+                  <span>Mostrar cierto dominio de los usos y convenciones sociales de la lengua y de los diferentes registros. Reconocer y entender diferentes variedades de la lengua.</span>
+                </li>
+                <li class="flex items-start gap-3">
+                  <span class="mt-2 h-2 w-2 shrink-0 rounded-full bg-red-600"></span>
+                  <span>Continuar el aprendizaje del español de forma autónoma una vez acabados los estudios de este nivel.</span>
+                </li>
+                <li class="flex items-start gap-3">
+                  <span class="mt-2 h-2 w-2 shrink-0 rounded-full bg-red-600"></span>
+                  <span>Aprovechar el conocimiento de los valores de otras culturas, contrastándolos con los propios valores, para favorecer y enriquecer la comunicación.</span>
+                </li>
+                <li class="flex items-start gap-3">
+                  <span class="mt-2 h-2 w-2 shrink-0 rounded-full bg-red-600"></span>
+                  <span>Integrar y combinar las diferentes competencias, habilidades, estrategias y actitudes para desarrollar una competencia plurilingüe y pluricultural.</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 2. OBJETIVOS POR DESTREZAS -->
+      <section class="accordion-item rounded-2xl border border-red-200/90 bg-white shadow-sm" data-section="objetivos-destrezas">
+        <button
+          type="button"
+          class="accordion-trigger flex w-full items-center justify-between gap-4 rounded-2xl px-5 py-4 text-left transition hover:bg-red-50/50 focus:outline-none focus-visible:ring-2 focus-visible:ring-red-600 sm:px-6"
+          aria-expanded="false"
+        >
+          <span class="flex items-center gap-3">
+            <span class="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-red-800 text-sm font-bold text-white">
+              2
+            </span>
+            <span class="text-base font-bold text-red-950 sm:text-lg">
+              Objetivos por destrezas
+            </span>
+          </span>
+          <svg class="accordion-chevron h-5 w-5 shrink-0 text-red-800" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="m6 9 6 6 6-6" />
+          </svg>
+        </button>
+
+        <div class="accordion-content">
+          <div class="accordion-inner">
+            <div class="space-y-4 border-t border-red-100 px-5 py-5 sm:px-6">
+              <div class="rounded-xl border border-red-100 bg-red-50/40 p-4">
+                <h2 class="text-sm font-bold text-red-900 sm:text-base">
+                  1. Expresión e interacción oral
+                </h2>
+                <p class="mt-1.5 text-sm leading-relaxed text-slate-700 sm:text-[15px]">
+                  Poder hacer intervenciones extensas, con objetivos y funciones diferentes, estructuradas de manera comprensible y coherente. Participar en conversaciones, discusiones y debates sobre temas generales, argumentando adecuadamente las propias opiniones.
+                </p>
+              </div>
+
+              <div class="rounded-xl border border-red-100 bg-red-50/40 p-4">
+                <h2 class="text-sm font-bold text-red-900 sm:text-base">
+                  2. Expresión e interacción escrita
+                </h2>
+                <p class="mt-1.5 text-sm leading-relaxed text-slate-700 sm:text-[15px]">
+                  Escribir textos extensos, claros y bien estructurados, con objetivos y funciones diferentes, sobre una amplia gama de temas, expresando y argumentando opiniones y los aspectos más relevantes del tema, con precisión y dominio de los diferentes registros.
+                </p>
+              </div>
+
+              <div class="rounded-xl border border-red-100 bg-red-50/40 p-4">
+                <h2 class="text-sm font-bold text-red-900 sm:text-base">
+                  3. Comprensión oral
+                </h2>
+                <p class="mt-1.5 text-sm leading-relaxed text-slate-700 sm:text-[15px]">
+                  Comprender el significado global, las líneas argumentativas y los detalles relevantes de textos orales sobre temas concretos y abstractos en lenguaje estándar, articulados a velocidad normal y provenientes de diferentes fuentes (medios de comunicación, películas, conferencias, discursos, mensajes grabados, teléfono, cara a cara…).
+                </p>
+              </div>
+
+              <div class="rounded-xl border border-red-100 bg-red-50/40 p-4">
+                <h2 class="text-sm font-bold text-red-900 sm:text-base">
+                  4. Comprensión lectora
+                </h2>
+                <p class="mt-1.5 text-sm leading-relaxed text-slate-700 sm:text-[15px]">
+                  Comprender sin dificultad textos largos y de cierta complejidad sobre temas concretos y abstractos, identificar las ideas principales y la intención comunicativa y localizar la información específica.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 3. CONTENIDOS SOCIOCULTURALES -->
+      <section class="accordion-item rounded-2xl border border-red-200/90 bg-white shadow-sm" data-section="contenidos-socioculturales">
+        <button
+          type="button"
+          class="accordion-trigger flex w-full items-center justify-between gap-4 rounded-2xl px-5 py-4 text-left transition hover:bg-red-50/50 focus:outline-none focus-visible:ring-2 focus-visible:ring-red-600 sm:px-6"
+          aria-expanded="false"
+        >
+          <span class="flex items-center gap-3">
+            <span class="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-red-800 text-sm font-bold text-white">
+              3
+            </span>
+            <span class="text-base font-bold text-red-950 sm:text-lg">
+              Contenidos socioculturales
+            </span>
+          </span>
+          <svg class="accordion-chevron h-5 w-5 shrink-0 text-red-800" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="m6 9 6 6 6-6" />
+          </svg>
+        </button>
+
+        <div class="accordion-content">
+          <div class="accordion-inner">
+            <div class="border-t border-red-100 px-5 py-5 sm:px-6">
+              <div class="rounded-xl border-l-4 border-red-700 bg-red-50/50 px-4 py-3.5 text-sm leading-relaxed text-slate-700 sm:text-[15px]">
+                <span class="font-semibold text-red-950">Ámbito sociocultural:</span> Conocer la sociedad y la cultura hispanohablante: condiciones de vida, relaciones interpersonales, valores y creencias, lenguaje corporal, convenciones sociales, comportamientos ritualizados…
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 4. COMPETENCIA LINGÜÍSTICA COMUNICATIVA -->
+      <section class="accordion-item rounded-2xl border border-red-200/90 bg-white shadow-sm" data-section="competencia-linguistica-comunicativa">
+        <button
+          type="button"
+          class="accordion-trigger flex w-full items-center justify-between gap-4 rounded-2xl px-5 py-4 text-left transition hover:bg-red-50/50 focus:outline-none focus-visible:ring-2 focus-visible:ring-red-600 sm:px-6"
+          aria-expanded="false"
+        >
+          <span class="flex items-center gap-3">
+            <span class="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-red-800 text-sm font-bold text-white">
+              4
+            </span>
+            <span class="text-base font-bold text-red-950 sm:text-lg">
+              Competencia lingüística comunicativa
+            </span>
+          </span>
+          <svg class="accordion-chevron h-5 w-5 shrink-0 text-red-800" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="m6 9 6 6 6-6" />
+          </svg>
+        </button>
+
+        <div class="accordion-content">
+          <div class="accordion-inner">
+            <div class="space-y-4 border-t border-red-100 px-5 py-5 sm:px-6">
+
+              <!-- Sub-acordeón 4.1: Competencia pragmática -->
+              <div class="accordion-item rounded-xl border border-red-200/80 bg-red-50/25">
+                <button
+                  type="button"
+                  class="accordion-trigger flex w-full items-center justify-between gap-3 rounded-xl px-4 py-3.5 text-left transition hover:bg-red-50/80 focus:outline-none focus-visible:ring-2 focus-visible:ring-red-600"
+                  aria-expanded="false"
+                >
+                  <span class="text-sm font-bold uppercase tracking-wide text-red-900 sm:text-base">
+                    Competencia pragmática
+                  </span>
+                  <svg class="accordion-chevron h-5 w-5 shrink-0 text-red-700" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="m6 9 6 6 6-6" />
+                  </svg>
+                </button>
+
+                <div class="accordion-content">
+                  <div class="accordion-inner">
+                    <div class="space-y-5 border-t border-red-100 bg-white px-4 py-4 sm:px-5">
+                      <div>
+                        <h3 class="text-sm font-bold text-red-800 sm:text-base">
+                          Funciones
+                        </h3>
+                        <ul class="mt-2.5 space-y-2.5 text-sm leading-relaxed text-slate-700 sm:text-[15px]">
+                          <li class="flex items-start gap-2.5">
+                            <span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-red-600"></span>
+                            <span><strong class="font-semibold text-red-950">Conocimientos e información:</strong> identificar e identificarse; informar; narrar; describir procesos; asentir y disentir; clasificar; comparar; corroborar; desmentir; expresar desconocimiento y duda.</span>
+                          </li>
+                          <li class="flex items-start gap-2.5">
+                            <span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-red-600"></span>
+                            <span><strong class="font-semibold text-red-950">Opiniones, creencias e hipótesis:</strong> expresar acuerdo y desacuerdo; expresar y argumentar una opinión; conjeturar; formular hipótesis sobre hechos pasados, presentes o futuros; objetar; suponer; valorar un hecho como causa o consecuencia de otro.</span>
+                          </li>
+                          <li class="flex items-start gap-2.5">
+                            <span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-red-600"></span>
+                            <span><strong class="font-semibold text-red-950">Propósitos de acción (intenciones, decisiones y voluntad):</strong> expresar el propósito, la intención o la voluntad de hacer algo; ofrecer ayuda; ofrecerse para hacer algo; aceptar o negarse a hacer algo; invitar; prometer; retractarse…</span>
+                          </li>
+                          <li class="flex items-start gap-2.5">
+                            <span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-red-600"></span>
+                            <span><strong class="font-semibold text-red-950">Actos que tienen como finalidad que la persona destinataria haga o no haga alguna cosa:</strong> dar órdenes; pedir; solicitar; pedir y dar consejos; recomendar; dar y pedir instrucciones; pedir opinión; pedir permiso y autorización; exigir; advertir; animar; persuadir y disuadir; proponer; sugerir; quejarse; reclamar…</span>
+                          </li>
+                          <li class="flex items-start gap-2.5">
+                            <span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-red-600"></span>
+                            <span><strong class="font-semibold text-red-950">Sentimientos, actitudes, estado físico y anímico:</strong> expresar admiración, decepción, afecto, estima, amor, odio, simpatía, alegría, tristeza, ansiedad, confianza, escepticismo, deseos, rechazo, duda, esperanza, dolor, preocupación, sorpresa, temor…</span>
+                          </li>
+                          <li class="flex items-start gap-2.5">
+                            <span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-red-600"></span>
+                            <span><strong class="font-semibold text-red-950">Relaciones sociales y actitudes hacia los demás:</strong> presentarse, invitar, agradecer, llamar la atención, pedir disculpas, disculpar, llamar la atención, felicitar, mostrar interés, lamentar, compadecerse, hacer cumplidos…</span>
+                          </li>
+                        </ul>
+                      </div>
+
+                      <div class="rounded-lg border border-red-100 bg-red-50/40 p-3.5">
+                        <h3 class="text-sm font-bold text-red-800 sm:text-base">
+                          Competencia sociolingüística
+                        </h3>
+                        <p class="mt-1.5 text-sm leading-relaxed text-slate-700 sm:text-[15px]">
+                          Selección y uso de las formas de tratamiento: formal, informal y familiar, formas de cortesía, expresiones, registros…
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Sub-acordeón 4.2: Competencia discursiva -->
+              <div class="accordion-item rounded-xl border border-red-200/80 bg-red-50/25">
+                <button
+                  type="button"
+                  class="accordion-trigger flex w-full items-center justify-between gap-3 rounded-xl px-4 py-3.5 text-left transition hover:bg-red-50/80 focus:outline-none focus-visible:ring-2 focus-visible:ring-red-600"
+                  aria-expanded="false"
+                >
+                  <span class="text-sm font-bold uppercase tracking-wide text-red-900 sm:text-base">
+                    Competencia discursiva
+                  </span>
+                  <svg class="accordion-chevron h-5 w-5 shrink-0 text-red-700" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="m6 9 6 6 6-6" />
+                  </svg>
+                </button>
+
+                <div class="accordion-content">
+                  <div class="accordion-inner">
+                    <div class="space-y-5 border-t border-red-100 bg-white px-4 py-4 sm:px-5">
+                      <div>
+                        <h3 class="text-sm font-bold text-red-800 sm:text-base">
+                          Organización del discurso
+                        </h3>
+                        <ul class="mt-2.5 space-y-2 text-sm leading-relaxed text-slate-700 sm:text-[15px]">
+                          <li class="flex items-start gap-2.5">
+                            <span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-red-600"></span>
+                            <span>Adecuación al contexto</span>
+                          </li>
+                          <li class="flex items-start gap-2.5">
+                            <span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-red-600"></span>
+                            <span>Relación del texto con la situación comunicativa</span>
+                          </li>
+                          <li class="flex items-start gap-2.5">
+                            <span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-red-600"></span>
+                            <span>Tipos de texto</span>
+                          </li>
+                          <li class="flex items-start gap-2.5">
+                            <span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-red-600"></span>
+                            <span>Variedad y registro: lengua oral y lengua escrita, diferencias de uso. Registro formal e informal.</span>
+                          </li>
+                          <li class="flex items-start gap-2.5">
+                            <span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-red-600"></span>
+                            <span>Tema: selección de las ideas principales</span>
+                          </li>
+                          <li class="flex items-start gap-2.5">
+                            <span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-red-600"></span>
+                            <span>Coherencia textual: el texto como unidad de significado</span>
+                          </li>
+                          <li class="flex items-start gap-2.5">
+                            <span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-red-600"></span>
+                            <span>Pertinencia del contenido</span>
+                          </li>
+                          <li class="flex items-start gap-2.5">
+                            <span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-red-600"></span>
+                            <span>Estructura del contenido: ordenación lógica de las ideas</span>
+                          </li>
+                          <li class="flex items-start gap-2.5">
+                            <span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-red-600"></span>
+                            <span>Selección de las estructuras morfosintáctica y léxicas adecuadas</span>
+                          </li>
+                          <li class="flex items-start gap-2.5">
+                            <span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-red-600"></span>
+                            <span>Cohesión textual: organización del texto</span>
+                          </li>
+                          <li class="flex items-start gap-2.5">
+                            <span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-red-600"></span>
+                            <span>Relaciones sintácticas y semánticas que conectan los enunciados</span>
+                          </li>
+                          <li class="flex items-start gap-2.5">
+                            <span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-red-600"></span>
+                            <span>Inicio del discurso: toma de contacto con el interlocutor, fórmulas para empezar las cartas; introducción al tema, formas de aludir al tema y tematización.</span>
+                          </li>
+                          <li class="flex items-start gap-2.5">
+                            <span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-red-600"></span>
+                            <span>Desarrollo del tema. Referencias textuales. Repeticiones: sinónimos, antónimos y campos léxicos. Reformulación, ejemplificación, enumeración y secuenciación temporal. Conectores textuales: adición, contraste, finalidad, causa, consecuencia, condición.</span>
+                          </li>
+                          <li class="flex items-start gap-2.5">
+                            <span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-red-600"></span>
+                            <span>Cierre del discurso. Resumen, recapitulación…</span>
+                          </li>
+                          <li class="flex items-start gap-2.5">
+                            <span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-red-600"></span>
+                            <span>Discurso oral. Turno de palabra. Papel del interlocutor: implicación, incredulidad, petición de confirmación, autocorrección, rectificación, recursos dilatorios…</span>
+                          </li>
+                          <li class="flex items-start gap-2.5">
+                            <span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-red-600"></span>
+                            <span>La entonación como recurso de cohesión del texto oral</span>
+                          </li>
+                          <li class="flex items-start gap-2.5">
+                            <span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-red-600"></span>
+                            <span>La puntuación como recurso de cohesión de un texto escrito: usos de los signos de puntuación.</span>
+                          </li>
+                        </ul>
+                      </div>
+
+                      <div>
+                        <h3 class="text-sm font-bold text-red-800 sm:text-base">
+                          Textos y ámbitos de uso
+                        </h3>
+                        <ul class="mt-2.5 space-y-2.5 text-sm leading-relaxed text-slate-700 sm:text-[15px]">
+                          <li class="flex items-start gap-2.5">
+                            <span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-red-600"></span>
+                            <span><strong class="font-semibold text-red-950">Expresión e interacción oral:</strong> Conversaciones de carácter formal e informal, participación en actividades de aprendizaje y evaluación…</span>
+                          </li>
+                          <li class="flex items-start gap-2.5">
+                            <span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-red-600"></span>
+                            <span><strong class="font-semibold text-red-950">Expresión e interacción escrita:</strong> Cartas formales, escritos personales e informes, artículos de opinión, resúmenes, actividades de aprendizaje y evaluación, participación en los medios que ofrece Internet</span>
+                          </li>
+                          <li class="flex items-start gap-2.5">
+                            <span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-red-600"></span>
+                            <span><strong class="font-semibold text-red-950">Comprensión oral:</strong> Noticias, reportajes, debates, tertulias, etc., emitidas por radio o televisión; discursos, conferencias…</span>
+                          </li>
+                          <li class="flex items-start gap-2.5">
+                            <span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-red-600"></span>
+                            <span><strong class="font-semibold text-red-950">Comprensión escrita:</strong> Diarios y revistas, textos literarios, diccionarios monolingües, cómics, publicidad…</span>
+                          </li>
+                          <li class="flex items-start gap-2.5">
+                            <span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-red-600"></span>
+                            <span><strong class="font-semibold text-red-950">Mediación oral y escrita:</strong> Hacer de intermediario/a en transacciones y situaciones sociales de amistad, trabajo, familia…, resúmenes diversos (diarios y revistas), etc.</span>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Sub-acordeón 4.3: Competencia lingüística -->
+              <div class="accordion-item rounded-xl border border-red-200/80 bg-red-50/25">
+                <button
+                  type="button"
+                  class="accordion-trigger flex w-full items-center justify-between gap-3 rounded-xl px-4 py-3.5 text-left transition hover:bg-red-50/80 focus:outline-none focus-visible:ring-2 focus-visible:ring-red-600"
+                  aria-expanded="false"
+                >
+                  <span class="text-sm font-bold uppercase tracking-wide text-red-900 sm:text-base">
+                    Competencia lingüística
+                  </span>
+                  <svg class="accordion-chevron h-5 w-5 shrink-0 text-red-700" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="m6 9 6 6 6-6" />
+                  </svg>
+                </button>
+
+                <div class="accordion-content">
+                  <div class="accordion-inner">
+                    <div class="space-y-6 border-t border-red-100 bg-white px-4 py-4 sm:px-5">
+
+                      <!-- Léxico y aspectos semánticos -->
+                      <div>
+                        <h3 class="text-sm font-bold text-red-800 sm:text-base">
+                          Léxico y aspectos semánticos
+                        </h3>
+                        <ul class="mt-2.5 space-y-2 text-sm leading-relaxed text-slate-700 sm:text-[15px]">
+                          <li class="flex items-start gap-2.5">
+                            <span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-red-600"></span>
+                            <span>Cultismos, neologismos, vulgarismos, siglas y argot.</span>
+                          </li>
+                          <li class="flex items-start gap-2.5">
+                            <span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-red-600"></span>
+                            <span>Palabras compuestas y derivadas. Formación de palabras.</span>
+                          </li>
+                          <li class="flex items-start gap-2.5">
+                            <span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-red-600"></span>
+                            <span>Frases hechas, dichos y refranes más frecuentes.</span>
+                          </li>
+                        </ul>
+                      </div>
+
+                      <!-- Morfosintaxis con todos sus subapartados -->
+                      <div class="rounded-xl border border-red-100 bg-red-50/30 p-4">
+                        <h3 class="text-sm font-bold text-red-800 sm:text-base">
+                          Morfosintaxis
+                        </h3>
+
+                        <div class="mt-3.5 space-y-3.5 text-sm leading-relaxed text-slate-700 sm:text-[15px]">
+                          <div class="border-b border-red-100 pb-3">
+                            <h4 class="font-bold text-red-950">Sustantivo</h4>
+                            <p class="mt-1">Género y número: casos especiales</p>
+                          </div>
+
+                          <div class="border-b border-red-100 pb-3">
+                            <h4 class="font-bold text-red-950">Adjetivo</h4>
+                            <p class="mt-1">Anteposición y posposición del adjetivo. Usos de la anteposición en el lenguaje periodístico y poético. Cambios de significado según la posición. Concordancias especiales. Cambios de función del adjetivo: sustantivación, usos adverbiales… Gradación del adjetivo: lo + adjetivo + (que), función y concordancia</p>
+                          </div>
+
+                          <div class="border-b border-red-100 pb-3">
+                            <h4 class="font-bold text-red-950">Determinantes</h4>
+                            <ul class="mt-1.5 space-y-1.5 pl-4">
+                              <li class="list-disc marker:text-red-600">
+                                <strong class="font-semibold text-red-900">Artículos:</strong> Presencia/ausencia de los artículos definidos e indefinidos. Sustantivación de adjetivos, adverbios y verbos
+                              </li>
+                              <li class="list-disc marker:text-red-600">
+                                <strong class="font-semibold text-red-900">Demostrativos:</strong> Posposición de los deícticos y diferentes valores. Locuciones con demostrativos
+                              </li>
+                              <li class="list-disc marker:text-red-600">
+                                <strong class="font-semibold text-red-900">Indefinidos:</strong> Usos de: cierto, demás, varios, tal, tales
+                              </li>
+                            </ul>
+                          </div>
+
+                          <div class="border-b border-red-100 pb-3">
+                            <h4 class="font-bold text-red-950">Pronombres</h4>
+                            <p class="mt-1">Usos especiales de los pronombres. Usos de se: involuntariedad (se me, se te, se le…). Cuyo/cuya; cuanto/a. Consolidación y ampliación del relativo con preposición y determinante: esa que, con aquellos que, de los cuales, sin la cual</p>
+                          </div>
+
+                          <div class="border-b border-red-100 pb-3">
+                            <h4 class="font-bold text-red-950">Verbo</h4>
+                            <p class="mt-1">Consolidación y ampliación de los contenidos desarrollados en los cursos precedentes de acuerdo con los objetivos de este nivel. Tiempos del pasado. Futuro simple y futuro compuesto. Condicional simple y condicional compuesto. Imperativo afirmativo y negativo. Contraste indicativo/subjuntivo. Contraste entre los tiempos de subjuntivo. La voz pasiva. El estilo indirecto: correlación de tiempos y modos. Ser y estar: ampliación del contraste. La impersonalidad: usos de se, uno/a, cualquiera</p>
+                          </div>
+
+                          <div class="border-b border-red-100 pb-3">
+                            <h4 class="font-bold text-red-950">Preposiciones y locuciones prepositivas</h4>
+                            <p class="mt-1">Ampliación de los usos de las preposiciones: a, de, en, por y para… Usos de según, excepto (que), incluso, etc.</p>
+                          </div>
+
+                          <div class="border-b border-red-100 pb-3">
+                            <h4 class="font-bold text-red-950">Locuciones adverbiales</h4>
+                            <p class="mt-1">Ampliación de los contenidos desarrollados en los cursos anteriores.</p>
+                          </div>
+
+                          <div class="border-b border-red-100 pb-3">
+                            <h4 class="font-bold text-red-950">Conjunciones</h4>
+                            <p class="mt-1">Conjunciones de coordinación y subordinación: Ampliación del uso de las conjunciones finales, condicionales, adversativas, concesivas, consecutivas, modales…</p>
+                          </div>
+
+                          <div class="border-b border-red-100 pb-3">
+                            <h4 class="font-bold text-red-950">Conectores</h4>
+                            <p class="mt-1">Conectores de coordinación y subordinación: Ampliación del uso de las conjunciones finales, condicionales, adversativas, concesivas, consecutivas, modales…</p>
+                          </div>
+
+                          <div class="border-b border-red-100 pb-3">
+                            <h4 class="font-bold text-red-950">Recursos de conexión textual</h4>
+                            <p class="mt-1">Ampliación de las diferentes combinaciones del orden de los elementos de la oración.</p>
+                          </div>
+
+                          <div class="border-b border-red-100 pb-3">
+                            <h4 class="font-bold text-red-950">Oración simple, pasiva, compuesta y subordinación</h4>
+                            <ul class="mt-1.5 space-y-1.5 pl-4">
+                              <li class="list-disc marker:text-red-600">
+                                <strong class="font-semibold text-red-900">La oración simple</strong>
+                              </li>
+                              <li class="list-disc marker:text-red-600">
+                                <strong class="font-semibold text-red-900">La oración pasiva</strong>
+                              </li>
+                              <li class="list-disc marker:text-red-600">
+                                <strong class="font-semibold text-red-900">La oración compuesta. La subordinación:</strong> Ampliación del uso de las oraciones subordinadas sustantivas y adjetivas con el verbo en indicativo, subjuntivo o infinitivo. Ampliación en el uso de las oraciones subordinadas adverbiales con el verbo en indicativo, subjuntivo e infinitivo: temporales de anterioridad, posterioridad y simultaneidad: tan pronto como, a medida que…; causales: dado que, dado/a…; finales: con el fin de (que), con el objeto de (que)…; consecutivas: por consiguiente…; concesivas: aún + gerundio, así y todo…; condicionales: de + infinitivo, excepto que, a condición de que, a no ser que, en caso de que, salvo que, siempre y cuando…
+                              </li>
+                            </ul>
+                          </div>
+
+                          <div class="border-b border-red-100 pb-3">
+                            <h4 class="font-bold text-red-950">Estilo indirecto</h4>
+                            <p class="mt-1">Cambios en deícticos y marcadores de acuerdo con las relaciones espaciales y temporales: pronombres, posesivos, demostrativos, expresiones de tiempo y lugar. Cambios léxicos.</p>
+                          </div>
+
+                          <div>
+                            <h4 class="font-bold text-red-950">Ortografía y aspectos gráficos</h4>
+                            <p class="mt-1">Separación de sílabas, reglas de acentuación, signos de puntuación</p>
+                          </div>
+                        </div>
+                      </div>
+
+                      <!-- Fonética y fonología -->
+                      <div class="rounded-lg border border-red-100 bg-red-50/40 p-3.5">
+                        <h3 class="text-sm font-bold text-red-800 sm:text-base">
+                          Fonética y fonología
+                        </h3>
+                        <p class="mt-1.5 text-sm leading-relaxed text-slate-700 sm:text-[15px]">
+                          Entonación: segmentación del discurso en unidades melódicas, el ritmo y las pausas, etc.
+                        </p>
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 5. EVALUACIÓN -->
+      <section class="accordion-item rounded-2xl border border-red-200/90 bg-white shadow-sm" data-section="evaluacion">
+        <button
+          type="button"
+          class="accordion-trigger flex w-full items-center justify-between gap-4 rounded-2xl px-5 py-4 text-left transition hover:bg-red-50/50 focus:outline-none focus-visible:ring-2 focus-visible:ring-red-600 sm:px-6"
+          aria-expanded="false"
+        >
+          <span class="flex items-center gap-3">
+            <span class="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-red-800 text-sm font-bold text-white">
+              5
+            </span>
+            <span class="text-base font-bold text-red-950 sm:text-lg">
+              Evaluación
+            </span>
+          </span>
+          <svg class="accordion-chevron h-5 w-5 shrink-0 text-red-800" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="m6 9 6 6 6-6" />
+          </svg>
+        </button>
+
+        <div class="accordion-content">
+          <div class="accordion-inner">
+            <div class="space-y-6 border-t border-red-100 px-5 py-5 sm:px-6">
+
+              <!-- Consideraciones generales -->
+              <div>
+                <h2 class="text-base font-bold text-red-900">
+                  Consideraciones generales
+                </h2>
+                <div class="mt-2 space-y-2.5 text-sm leading-relaxed text-slate-700 sm:text-[15px]">
+                  <p>
+                    De acuerdo con el currículum actual del Departament d’Educació para las escuelas oficiales de idiomas, “La evaluación del proceso de aprendizaje de los alumnos oficiales de las modalidades presencial y semipresencial debe ser continua y sistemática, globalizada, integradora y personalizada, con el objetivo de valorar su progreso y contrastar los objetivos establecidos con los resultados obtenidos”.
+                  </p>
+                  <p>
+                    La evaluación se basará en la consecución de las competencias descritas para este nivel.
+                  </p>
+                  <p>
+                    La evaluación continua sitúa en lugar preeminente el intercambio continuo de información sobre el proceso de aprendizaje entre profesores y alumnos, puesto que este aspecto se considera una herramienta de formación imprescindible.
+                  </p>
+                </div>
+              </div>
+
+              <!-- Criterios e instrumentos de evaluación continua -->
+              <div>
+                <h2 class="text-base font-bold text-red-900">
+                  Criterios e instrumentos que se valorarán durante la evaluación continua
+                </h2>
+                <ul class="mt-2.5 space-y-2.5 text-sm leading-relaxed text-slate-700 sm:text-[15px]">
+                  <li class="rounded-xl border border-red-200 bg-red-50/70 p-3.5">
+                    <strong class="font-bold text-red-950">Asistencia:</strong> como la modalidad de aprendizaje es presencial o semipresencial, la asistencia es imprescindible para llevar a cabo el proceso de intercambio de información entre profesor y alumno. Hay que recordar que según la Resolución de inicio de curso: <span class="font-semibold text-red-900">“En caso de ausencias superiores al 35% del periodo lectivo, el alumno no podrá ser evaluado de forma continua y solo podrá presentarse a una prueba final del curso”</span>.
+                  </li>
+                  <li class="flex items-start gap-2.5">
+                    <span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-red-600"></span>
+                    <span>Participación activa en las actividades en el aula.</span>
+                  </li>
+                  <li class="flex items-start gap-2.5">
+                    <span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-red-600"></span>
+                    <span>Trabajo autónomo en casa.</span>
+                  </li>
+                  <li class="flex items-start gap-2.5">
+                    <span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-red-600"></span>
+                    <span>Tareas y pruebas (programadas o no) de tipología diversa.</span>
+                  </li>
+                </ul>
+              </div>
+
+              <!-- Prueba final -->
+              <div class="rounded-xl border border-red-100 bg-red-50/40 p-4">
+                <h2 class="text-base font-bold text-red-900">
+                  Prueba final
+                </h2>
+                <p class="mt-1.5 text-sm leading-relaxed text-slate-700 sm:text-[15px]">
+                  Al final del curso habrá una prueba final de certificación. Las características y los criterios para superar esta prueba se rigen por el <strong class="font-semibold text-red-950">Real Decreto 1/2019, de 11 de enero</strong>, y son obligatorias para la obtención del certificado correspondiente al nivel y para la promoción al siguiente curso. Más información aquí.
+                </p>
+              </div>
+
+              <!-- Calificaciones en tabla limpia -->
+              <div>
+                <h2 class="text-base font-bold text-red-900">
+                  Calificaciones
+                </h2>
+                <p class="mt-1.5 text-sm leading-relaxed text-slate-700 sm:text-[15px]">
+                  Las calificaciones finales pueden ser:
+                </p>
+
+                <div class="mt-3 overflow-x-auto rounded-xl border border-red-200">
+                  <table class="min-w-full border-collapse text-left text-sm sm:text-[15px]">
+                    <thead>
+                      <tr class="bg-red-800 text-white">
+                        <th scope="col" class="px-4 py-3 font-bold">Calificación final</th>
+                        <th scope="col" class="px-4 py-3 font-bold">Descripción</th>
+                      </tr>
+                    </thead>
+                    <tbody class="divide-y divide-red-100 bg-white">
+                      <tr class="hover:bg-red-50/40">
+                        <td class="whitespace-nowrap px-4 py-3 font-bold text-red-950">APTO/A</td>
+                        <td class="px-4 py-3 text-slate-700">Superación del nivel según los criterios establecidos.</td>
+                      </tr>
+                      <tr class="bg-red-50/25 hover:bg-red-50/50">
+                        <td class="whitespace-nowrap px-4 py-3 font-bold text-red-950">NO APTO/A</td>
+                        <td class="px-4 py-3 text-slate-700">No superación del nivel en la evaluación correspondiente.</td>
+                      </tr>
+                      <tr class="hover:bg-red-50/40">
+                        <td class="whitespace-nowrap px-4 py-3 font-bold text-red-950">NP</td>
+                        <td class="px-4 py-3 text-slate-700">No presentado, si no se ha presentado a ninguna de las partes.</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+
+                <p class="mt-3 text-sm leading-relaxed text-slate-700 sm:text-[15px]">
+                  El alumno recibirá información sobre el nivel conseguido en las diferentes habilidades y subcompetencias.
+                </p>
+              </div>
+
+              <!-- Calendario escolar -->
+              <div class="rounded-xl border border-red-100 bg-white p-4">
+                <h2 class="text-base font-bold text-red-900">
+                  Calendario escolar
+                </h2>
+                <p class="mt-1.5 text-sm leading-relaxed text-slate-700 sm:text-[15px]">
+                  Podéis consultar o imprimir el calendario escolar aquí.
+                </p>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- Pie de página limpio con los datos de contacto del centro -->
+    <footer class="mt-8 rounded-2xl border border-red-200 bg-white px-5 py-4 text-center text-xs leading-relaxed text-slate-600 shadow-sm sm:px-6 sm:text-sm">
+      <p class="font-semibold text-red-950">
+        Escola Oficial d'Idiomes · EOI Barcelona Drassanes
+      </p>
+      <p class="mt-1">
+        Av. Drassanes, 14 · 08001 Barcelona · Tel. 93 324 93 30 · Fax. 93 324 93 51 · www.eoibd.cat
+      </p>
+    </footer>
+
+  </div>
+
+  <!-- Lógica interactiva para desplegar/contraer pestañas individuales y masivas -->
+  <script>
+    (function () {
+      const accordionRoot = document.getElementById('program-accordion');
+      const expandAllBtn = document.getElementById('expand-all-btn');
+      const collapseAllBtn = document.getElementById('collapse-all-btn');
+      const statusLabel = document.getElementById('accordion-status');
+
+      if (!accordionRoot) return;
+
+      const allItems = Array.from(accordionRoot.querySelectorAll('.accordion-item'));
+      const allTriggers = Array.from(accordionRoot.querySelectorAll('.accordion-trigger'));
+
+      /**
+       * Actualiza el estado visual y de accesibilidad (aria-expanded) de un elemento del acordeón.
+       * @param {HTMLElement} item
+       * @param {boolean} open
+       */
+      function setItemState(item, open) {
+        if (!item) return;
+        item.classList.toggle('is-open', open);
+        const trigger = item.querySelector(':scope > .accordion-trigger');
+        if (trigger) {
+          trigger.setAttribute('aria-expanded', open ? 'true' : 'false');
+        }
+      }
+
+      /**
+       * Actualiza el texto de estado de las secciones principales desplegadas.
+       */
+      function updateStatusText() {
+        if (!statusLabel) return;
+        const topSections = Array.from(accordionRoot.querySelectorAll(':scope > .accordion-item'));
+        const openCount = topSections.filter((sec) => sec.classList.contains('is-open')).length;
+        const totalCount = topSections.length;
+
+        if (openCount === 0) {
+          statusLabel.textContent = 'Todas las secciones principales contraídas';
+        } else if (openCount === totalCount) {
+          statusLabel.textContent = `Todas las secciones principales expandidas (${openCount}/${totalCount})`;
+        } else {
+          statusLabel.textContent = `${openCount} de ${totalCount} secciones principales expandidas`;
+        }
+      }
+
+      // Listener individual para cada botón de acordeón (principales y sub-acordeones)
+      allTriggers.forEach((trigger) => {
+        trigger.addEventListener('click', () => {
+          const item = trigger.closest('.accordion-item');
+          if (!item) return;
+          const willOpen = !item.classList.contains('is-open');
+          setItemState(item, willOpen);
+          updateStatusText();
+        });
+      });
+
+      // Expandir todas las pestañas y subpestañas
+      if (expandAllBtn) {
+        expandAllBtn.addEventListener('click', () => {
+          allItems.forEach((item) => setItemState(item, true));
+          updateStatusText();
+        });
+      }
+
+      // Contraer todas las pestañas y subpestañas
+      if (collapseAllBtn) {
+        collapseAllBtn.addEventListener('click', () => {
+          allItems.forEach((item) => setItemState(item, false));
+          updateStatusText();
+        });
+      }
+
+      updateStatusText();
+    })();
+  </script>
+</body>
+</html>
