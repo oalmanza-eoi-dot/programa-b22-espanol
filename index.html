@@ -886,5 +886,32 @@
       updateStatusText();
     })();
   </script>
+  <!-- Botón permanente para volver arriba del todo -->
+<button
+  id="btn-volver-arriba"
+  type="button"
+  aria-label="Volver arriba del todo"
+  onclick="window.scrollTo({ top: 0, behavior: 'smooth' })"
+  class="fixed bottom-5 right-5 z-50 hidden items-center gap-2 rounded-full border border-red-800 bg-red-700 px-4 py-2.5 text-sm font-semibold text-white shadow-lg transition hover:bg-red-800 focus:outline-none focus:ring-2 focus:ring-red-400"
+>
+  <span>↑</span>
+  <span>Arriba</span>
+</button>
+
+<script>
+  (function () {
+    const btn = document.getElementById("btn-volver-arriba");
+    if (!btn) return;
+    window.addEventListener("scroll", function () {
+      if (window.scrollY > 250) {
+        btn.classList.remove("hidden");
+        btn.classList.add("flex");
+      } else {
+        btn.classList.add("hidden");
+        btn.classList.remove("flex");
+      }
+    }, { passive: true });
+  })();
+</script>
 </body>
 </html>
